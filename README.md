@@ -1,6 +1,13 @@
-# SQL Queries | Movies Dataset 
+<div align="center">
+	<h1>
+		SQL Queries | Movies Dataset 
+	</h1>
 
-### Show a list of films 
+![image](https://img.freepik.com/free-vector/realistic-horizontal-cinema-movie-time-poster-with-3d-glasses-snacks-tickets-clapper-reel-blue-background-with-bokeh-vector-illustration_1284-77013.jpg?t=st=1708960090~exp=1708963690~hmac=a43c67c034b365a61c378b5a2c308899ba06016c7e9f00e37eb8cd549661569b&w=1380)
+ </div>
+
+
+### (1) Show a list of films 
 
 Showing a list of films with release date and duration.
 
@@ -18,7 +25,7 @@ FROM
 	dbo.tblFilm
 ```
 
-### Sorting in Queries
+###  (2) Sorting in Queries
 
 **SQL Query: Using ORDER BY Clause**
 
@@ -71,4 +78,4 @@ ORDER BY
 | Around the World in 80 Days               | 1956-10-17 00:00:00.000   | 167      | 5                |
 | American Beauty                           | 2000-02-04 00:00:00.000   | 122      | 5                |
 
-
+###  (3) Criteria in Queries
