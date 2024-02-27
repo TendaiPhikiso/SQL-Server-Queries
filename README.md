@@ -78,4 +78,55 @@ ORDER BY
 | Around the World in 80 Days               | 1956-10-17 00:00:00.000   | 167      | 5                |
 | American Beauty                           | 2000-02-04 00:00:00.000   | 122      | 5                |
 
+
 ###  (3) Criteria in Queries
+
+**SQL Query:Using Text**
+
+```sql
+
+SELECT 
+	FilmName,
+	FilmReleaseDate,
+	FilmRunTimeMinutes
+
+FROM 
+	tblFilm
+WHERE 
+/* 
+	% Wildcard is used with the LIKE operator 
+	This query retrieves rows where the the values in FilmName start with die hard 
+	and the % allows any characters to follow the specified prefix. So you'll get die hard 2.. instead 
+	of just die hard 
+
+*/
+	FilmName LIKE 'die hard%'
+ORDER BY 
+	FilmRunTimeMinutes
+```
+
+**Result Set:**
+
+| FilmName                    | FilmReleaseDate            | FilmRunTimeMinutes |
+|-----------------------------|----------------------------|--------------------|
+| Die Hard 2                  | 1990-08-17 00:00:00.000    | 124                |
+| Live Free or Die Hard       | 2007-07-04 00:00:00.000    | 130                |
+| Die Hard: With A Vengeance  | 1995-08-18 00:00:00.000    | 131                |
+| Die Hard                    | 1989-02-03 00:00:00.000    | 131                |
+
+
+**SQL Query: Using Date**
+
+```sql
+-- Find films released in the year 2000
+SELECT 
+	FilmName,
+	FilmReleaseDate,
+	FilmRunTimeMinutes	
+FROM 
+	tblFilm
+WHERE 
+	 YEAR(FilmReleaseDate) = 2000
+ORDER BY 
+	FilmReleaseDate
+```
