@@ -130,3 +130,32 @@ WHERE
 ORDER BY 
 	FilmReleaseDate
 ```
+
+
+###  (4) Calculated Columns 
+
+```sql
+
+```
+
+
+###  (5) CASE Statement
+
+```sql
+SELECT
+	FilmName,
+	FilmRunTimeMinutes,
+	CASE
+		WHEN FilmRunTimeMinutes <= 90 THEN 'Short'
+		WHEN FilmRunTimeMinutes <= 150 THEN 'Medium'
+		WHEN FilmRunTimeMinutes <= 180 THEN 'Long'
+		ELSE 'Epic'
+	END AS [FilmDuration]
+
+FROM 
+	tblFilm
+```
+
+
+###  (6)
+
