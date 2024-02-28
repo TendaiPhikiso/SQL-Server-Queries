@@ -275,10 +275,51 @@ FROM
 ```
 
 
-###  (9) 
+###  (9) Date Calculations
 
 ```sql
 
+-- Show date with 2 digit year | Change to standard format
+SELECT 
+	FilmName,
+	FilmReleaseDate,
+	CONVERT(CHAR(8), FilmReleaseDate,3)
+FROM
+	tblFilm
+
+-- Show date with 4 digit year 
+SELECT 
+	FilmName,
+	FilmReleaseDate,
+	CONVERT(CHAR(10), FilmReleaseDate,103)
+FROM
+	tblFilm
+
+-- Custome date format
+-- Format that reads the full day of the month
+SELECT 
+	FilmName,
+	FilmReleaseDate,
+	CONVERT(CHAR(10), FilmReleaseDate,103),
+	FORMAT(FilmReleaseDate, 'dddd dd MMMM yyyy') AS FormattedDate
+FROM
+	tblFilm
+
+-- Check the dif in years between the film release date and today 
+
+SELECT
+	FilmName,
+	FilmReleaseDate,
+	DATEADD(YY, DATEDIFF(YY,FilmReleaseDate, GETDATE()), FilmReleaseDate),
+	CASE 
+	-- If birthday of films this year is after todays date
+		WHEN DATEADD(YY, DATEDIFF(YY,FilmReleaseDate, GETDATE()), FilmReleaseDate) > GETDATE()
+		THEN DATEDIFF(YY,FilmReleaseDate, GETDATE()) -1
+		ELSE DATEDIFF(YY,FilmReleaseDate, GETDATE()) 
+	END
+
+FROM 
+	tblFilm
 ```
 
 ###  (10) 
