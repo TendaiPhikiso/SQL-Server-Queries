@@ -223,3 +223,29 @@ FROM
 	tblActor AS a FULL OUTER JOIN tblDirector AS d ON a.ActorName=d.DirectorName
 
 ```
+
+###  (7) Using Functions
+
+```sql
+
+-- Get the Names of each month that a film was released
+SELECT
+	FilmName,
+	UPPER(FilmName), --turn characters into UPPER CASE
+	FilmReleaseDate,
+	DATENAME(MONTH,FilmReleaseDate) AS [MonthName]
+FROM 
+	tblFilm
+
+-- Nesting Functions
+
+--Calculate how old the films are in days
+SELECT
+	FilmName,
+	UPPER(FilmName),
+	FilmReleaseDate,
+	DATENAME(MONTH,FilmReleaseDate) AS [MonthName],
+	DATEDIFF(DAY,FilmReleaseDate, GETDATE()) AS [Days] --GETDATE, gets the current system date & time 
+FROM 
+	tblFilm
+```
