@@ -249,3 +249,56 @@ SELECT
 FROM 
 	tblFilm
 ```
+###  (8) Text Calculations
+
+```sql
+
+-- Concatenating text and numbers 
+
+SELECT 
+	FilmName,
+	FilmOscarWins,
+	FilmName + ' won ' + CONVERT(VARCHAR(2), FilmOscarWins)
+FROM 
+	tblFilm
+
+-- String Functions 
+--Separate actors first name and last name 
+
+SELECT 
+	ActorName,
+	LEFT(ActorName,CHARINDEX(' ' ,ActorName)-1) AS [ActorsFirstName],
+	RIGHT(ActorName, LEN(ActorName)- CHARINDEX(' ', ActorName)) AS [ActorsLastName]
+FROM 
+	tblActor
+
+```
+
+
+###  (9) 
+
+```sql
+
+```
+
+###  (10) 
+
+```sql
+
+```
+
+
+###  (11) 
+
+```sql
+
+```
+
+###  (12) 
+
+```sql
+
+```
+
+
+
