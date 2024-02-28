@@ -322,9 +322,68 @@ FROM
 	tblFilm
 ```
 
-###  (10) 
+###  (10) GROUP BY and HAVING
 
 ```sql
+--Look for countries whose name begins with the later U
+
+SELECT
+	ISNULL(CountryName, 'TOTAL'),
+	SUM(FilmRunTimeMinutes)  AS [TotalRunTime],
+	AVG(FilmRunTimeMinutes)  AS [AverageRunTime],
+	MAX(FilmRunTimeMinutes)  AS [HighestRunTime],
+	MIN(FilmRunTimeMinutes)  AS [ShortestRunTime]
+FROM 
+	tblFilm AS f INNER JOIN tblCountry AS c ON c.CountryID=f.FilmCountryID
+WHERE
+	CountryName LIKE 'U%'
+GROUP BY 
+	CountryName WITH ROLLUP
+ORDER BY
+	CountryName ASC
+
+---
+
+/*
+ HAVING clause is used instead of the WHERE clause because it filters
+ the results based on the results of aggregate functions (e.g., MIN, SUM, AVG, etc.) 
+*/
+
+SELECT
+	ISNULL(CountryName, 'TOTAL'),
+	SUM(FilmRunTimeMinutes)  AS [TotalRunTime],
+	AVG(FilmRunTimeMinutes)  AS [AverageRunTime],
+	MAX(FilmRunTimeMinutes)  AS [HighestRunTime],
+	MIN(FilmRunTimeMinutes)  AS [ShortestRunTime]
+FROM 
+	tblFilm AS f INNER JOIN tblCountry AS c ON c.CountryID=f.FilmCountryID
+GROUP BY 
+	CountryName WITH ROLLUP
+HAVING 
+	MIN(FilmRunTimeMinutes) >= 100
+ORDER BY
+	CountryName ASC
+
+--Multiple columns
+/*
+Generate a summary report with average film runtimes and film counts, grouped by country and director, including subtotals and a grand total.
+*/
+SELECT 
+	ISNULL(CountryName, 'Grand'),
+	ISNULL(DirectorName,'Total'),
+	AVG(CONVERT(DECIMAL, FilmRunTimeMinutes)) AS [AverageFilmRunTime],
+	COUNT(*) AS [FilmCount] -- count of films 
+FROM 
+	tblFilm AS f
+	INNER JOIN tblCountry AS c ON c.CountryID=f.FilmCountryID
+	INNER JOIN tblDirector AS d ON d.DirectorID=f.FilmDirectorID
+-- Groups the results by CountryName and DirectorName with the ROLLUP option for subtotals and a grand total.
+GROUP BY 
+	CountryName,
+	DirectorName WITH ROLLUP
+-- Orders the result set by CountryName in ascending order.
+ORDER BY 
+	CountryName
 
 ```
 
