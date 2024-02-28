@@ -157,5 +157,69 @@ FROM
 ```
 
 
-###  (6)
+###  (6) INNER & OUTER JOINS 
+```sql
+--- Inner joins 
+SELECT TOP 5
+--Specify fields you want to see 
+	f.FilmName,
+	d.DirectorName,
+	s.StudioName,
+	c.CountryName
+FROM 
+	tblFilm AS f
+	INNER JOIN tblDirector AS d
+		ON f.FilmDirectorID = d.DirectorID
+	INNER JOIN tblStudio AS s
+		ON f.FilmStudioID = s.StudioID
+	INNER JOIN tblCountry AS c
+		ON f.FilmCountryID = c.CountryID
 
+```
+**Result Set:**
+| FilmName          | DirectorName        | StudioName                  | CountryName   |
+|-------------------|---------------------|-----------------------------|---------------|
+| Jurassic Park     | Steven Spielberg    | Universal Pictures          | United States |
+| Spider-Man        | Sam Raimi           | Columbia Pictures           | United States |
+| King Kong         | Peter Jackson       | Universal Pictures          | United States |
+| Superman Returns  | Bryan Singer        | Warner Bros. Pictures       | United States |
+| Titanic           | James Cameron       | 20th Century Fox            | United States |
+
+
+#### Other JOINS
+```sql
+
+--show people who have been actors and directors 
+SELECT 
+	* 
+FROM 
+	tblActor AS a
+	INNER JOIN tblDirector AS d
+		ON a.ActorName=d.DirectorName
+-------------------------------------------------------------
+-- Show people who have only been actors and Not Directors 
+SELECT 
+	* 
+FROM 
+	tblActor AS a LEFT OUTER JOIN tblDirector AS d ON a.ActorName=d.DirectorName
+WHERE 
+	d.DirectorID IS NULL
+
+-------------------------------------------------------------
+-- Show people who have only been Directors & not Actors 
+SELECT 
+	*
+FROM 
+	tblActor AS a RIGHT OUTER JOIN tblDirector AS d ON a.ActorName=d.DirectorName
+WHERE 
+	a.ActorID IS NULL
+
+-------------------------------------------------------------
+
+-- VIEW all the above information from both tables | All actors, All directors and All people who have been both 
+SELECT 
+	*
+FROM 
+	tblActor AS a FULL OUTER JOIN tblDirector AS d ON a.ActorName=d.DirectorName
+
+```
