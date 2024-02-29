@@ -136,6 +136,61 @@ ORDER BY
 
 ```sql
 
+--Workout the profit loss for the films & use  Calculations to sort Queries
+
+SELECT 
+	FilmName,
+	FilmBoxOfficeDollars,
+	FilmBudgetDollars,
+	FilmBoxOfficeDollars-FilmBudgetDollars AS [FilmProfitLoss]
+FROM 
+	tblFilm
+ORDER BY 
+	FilmProfitLoss DESC
+
+--- Use calculated column in a WHERE Clause 
+SELECT 
+	FilmName,
+	FilmBoxOfficeDollars,
+	FilmBudgetDollars,
+	FilmBoxOfficeDollars-FilmBudgetDollars AS [FilmProfitLoss]
+FROM 
+	tblFilm
+WHERE 
+	(FilmBoxOfficeDollars-FilmBudgetDollars) < 0 
+ORDER BY 
+	FilmProfitLoss DESC
+
+--- Calculate hours and Minutes 
+SELECT 
+	FilmName,
+	FilmRunTimeMinutes,
+	FilmRunTimeMinutes/60 AS [Hours],
+	FilmRunTimeMinutes%60 AS [Minutes]
+FROM 
+	tblFilm
+
+/*
+THE CASE STATEMENT
+
+--Case statement are used to test dif conditions
+The CASE expression goes through conditions and returns a value
+when the first condition is met (like an if-then-else statement)
+*/
+
+SELECT
+	FilmName,
+	FilmRunTimeMinutes,
+	CASE
+		WHEN FilmRunTimeMinutes <= 90 THEN 'Short'
+		WHEN FilmRunTimeMinutes <= 150 THEN 'Medium'
+		WHEN FilmRunTimeMinutes <= 180 THEN 'Long'
+		ELSE 'Epic'
+	END AS [FilmDuration]
+
+FROM 
+	tblFilm
+
 ```
 
 
@@ -458,6 +513,37 @@ WHERE
 
 ```sql
 
+-- Show film with the longest running time in a country 
+SELECT
+	c.CountryName,
+	f.FilmName,
+	f.FilmRunTimeMinutes
+FROM 
+	tblFilm AS f INNER JOIN
+	tblCountry AS c ON c.CountryID=f.FilmCountryID
+WHERE
+	f.FilmRunTimeMinutes = 
+		(
+			SELECT MAX(FilmRunTimeMinutes)
+			FROM tblFilm AS g
+			WHERE g.FilmCountryID=f.FilmCountryID
+		)
+-- Show films that are longer than average of all films in a particular year 
+SELECT
+	YEAR(f.FilmReleaseDate) AS y,
+	f.FilmName,
+	f.FilmRunTimeMinutes
+FROM 
+	tblFilm AS f 
+WHERE
+	f.FilmRunTimeMinutes = 
+		(
+			SELECT AVG(FilmRunTimeMinutes)
+			FROM tblFilm AS g
+			WHERE YEAR(g.FilmReleaseDate)=YEAR(f.FilmReleaseDate)
+		)
+ORDER BY
+	y
 ```
 
 
