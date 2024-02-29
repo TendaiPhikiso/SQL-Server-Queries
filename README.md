@@ -388,13 +388,73 @@ ORDER BY
 ```
 
 
-###  (11) 
+###  (11) Subqueries 
 
 ```sql
+--Subquery = Query nested inside another
+
+-- Find details of a film using subqueries based on filmOscar wins
+SELECT 
+	FilmName,
+	FilmReleaseDate
+FROM	
+	tblFilm
+WHERE 
+	FilmOscarWins =
+		(SELECT 
+			MAX(FilmOscarWins)
+		FROM
+			tblFilm)
+
+-- Aggregates in Subqueries
+-- Find films that are greater than the average 
+SELECT 
+	FilmName,
+	FilmRunTimeMinutes
+FROM	
+	tblFilm
+WHERE 
+	 FilmRunTimeMinutes >=
+		(SELECT 
+			AVG(CONVERT(DECIMAL, FilmRunTimeMinutes))
+		FROM
+			tblFilm)
+
+-- Using a WHERE Clause in a Subquery
+-- Show list of all films whose budget was greater than the most expensive film released in the year 2000
+SELECT
+	FilmName,
+	FilmReleaseDate,
+	FilmBudgetDollars
+FROM 
+	tblFilm
+WHERE
+	FilmBudgetDollars > 
+		(SELECT 
+			MAX(FilmBudgetDollars)
+		FROM
+			tblFilm
+		WHERE
+			 FilmReleaseDate < '2000-01-01')
+
+--Check films whose release dates are the same as the filmName Casino
+SELECT
+	FilmName,
+	FilmReleaseDate
+FROM 
+	tblFilm
+WHERE
+	FilmReleaseDate = 
+		(SELECT 
+			FilmReleaseDate
+		FROM
+			tblFilm
+		WHERE
+			FilmName = 'Casino')
 
 ```
 
-###  (12) 
+###  (12) Correlated Subqueries
 
 ```sql
 
